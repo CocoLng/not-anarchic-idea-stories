@@ -1,5 +1,6 @@
-import numpy as np
 import random
+
+import numpy as np
 
 # Create a Q-table with the dimensions of the state and action space
 q_table = np.zeros((state_space_size, action_space_size))
@@ -8,6 +9,7 @@ q_table = np.zeros((state_space_size, action_space_size))
 learning_rate = 0.8
 discount_factor = 0.95
 exploration_rate = 0.1
+
 
 # Define the on_message event handler
 @client.event
@@ -22,6 +24,7 @@ async def on_message(message):
     # Take the action and get the next state and reward
     next_state, reward = take_action(action)
     # Update the Q-table
-    q_table[current_state][action] = (1 - learning_rate) * q_table[current_state][action] + learning_rate * (reward + discount_factor * np.max(q_table[next_state]))
+    q_table[current_state][action] = (1 - learning_rate) * q_table[current_state][action] + learning_rate * (
+                reward + discount_factor * np.max(q_table[next_state]))
     # Update the current state
     current_state = next_state
